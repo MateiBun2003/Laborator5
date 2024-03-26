@@ -3,40 +3,31 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Calea către fișierul text
-        String fileName = "Lab5";
-
-        Map<String, Integer> wordCount = new HashMap<>();
-
         try {
-            // Crearea unui obiect Scanner pentru citirea fișierului
-            Scanner scanner = new Scanner(new File(fileName));
+            File file = new File("Lab5");
+            Scanner scanner = new Scanner(file);
+            Map<String, Integer> wordCounts = new HashMap<>();
 
             while (scanner.hasNext()) {
                 String word = scanner.next();
-
-                // Eliminăm semnele de punctuație și convertim la litera mică
-                word = word.replaceAll("[^a-zA-Z]", "").toUpperCase();
-
-                // Verificăm dacă cuvântul este gol după eliminarea semnelor de punctuație
-                if (!word.isEmpty()) {
-                    wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+                if (wordCounts.containsKey(word)) {
+                    wordCounts.put(word, wordCounts.get(word) + 1);
+                } else {
+                    wordCounts.put(word, 1);
                 }
             }
 
-            // Închidem scanner-ul
-            scanner.close();
-
-            // Afișăm rezultatul
-            for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
+            for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
+                System.out.println(entry.getKey() + " apare de " + entry.getValue() + " ori.");
             }
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("Fișierul nu a fost găsit: " + e.getMessage());
+
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Fișierul nu a fost găsit sau nu conține cuvinte");
         }
     }
 }
