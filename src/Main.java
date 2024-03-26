@@ -21,8 +21,8 @@ public class Main {
                 }
             }
 
-            for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
-                System.out.println(entry.getKey() + " apare de " + entry.getValue() + " ori.");
+            for (String word: wordCounts.keySet()) {
+                System.out.println(word + " apare de " + wordCounts.get(word) + " ori.");
             }
 
             scanner.close();
